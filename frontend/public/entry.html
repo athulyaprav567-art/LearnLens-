@@ -1,0 +1,1053 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LearnLens</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #F5EDE0;
+      --card: #FFFAF2;
+      --text: #3E3152;
+      --muted: #7D7185;
+      --accent: #8D5BA6;
+      --accent-dark: #71458A;
+      --green: #527A68;
+      --border: #E7DCCB;
+      --error: #B85C5C;
+      --shadow: 0 18px 45px rgba(82, 57, 76, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1050px;
+      min-height: 650px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .screen {
+      display: none;
+      min-height: 650px;
+      padding: 45px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .screen.active {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .brand {
+      font-family: "Bodoni Moda", serif;
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 50px;
+    }
+
+    .brand span {
+      color: var(--accent);
+    }
+
+    .content {
+      width: 100%;
+      max-width: 720px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--green);
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-family: "Bodoni Moda", serif;
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+
+    h2 {
+      font-family: "Bodoni Moda", serif;
+      font-size: 38px;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.7;
+      max-width: 570px;
+      margin: 0 auto 35px;
+    }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    .role-card {
+      border: 1px solid var(--border);
+      background: #fffdf8;
+      border-radius: 22px;
+      padding: 32px 25px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .role-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 12px 30px rgba(82, 57, 76, 0.1);
+    }
+
+    .role-icon {
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .role-card h3 {
+      font-family: "Bodoni Moda", serif;
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .role-card p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .form-box {
+      width: 100%;
+      max-width: 480px;
+      margin: 25px auto 0;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 9px;
+    }
+
+    input {
+      width: 100%;
+      padding: 17px 18px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #fffdf8;
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      font-size: 16px;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(141, 91, 166, 0.1);
+    }
+
+    .primary-btn {
+      width: 100%;
+      margin-top: 15px;
+      border: none;
+      border-radius: 13px;
+      padding: 17px;
+      background: var(--accent);
+      color: white;
+      font-family: "DM Sans", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .primary-btn:hover {
+      background: var(--accent-dark);
+      transform: translateY(-1px);
+    }
+
+    .back-btn {
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      font-family: "DM Sans", sans-serif;
+      font-size: 15px;
+      cursor: pointer;
+      padding: 8px 0;
+      align-self: flex-start;
+      transition: 0.2s ease;
+    }
+
+    .back-btn:hover {
+      color: var(--text);
+    }
+
+    .error {
+      display: none;
+      color: var(--error);
+      font-size: 14px;
+      margin-top: 12px;
+      font-weight: 600;
+    }
+
+    .error.show {
+      display: block;
+    }
+
+    .success-card {
+      background: #F4F8F3;
+      border: 1px solid #D9E7D8;
+      border-radius: 22px;
+      padding: 32px;
+      max-width: 520px;
+      margin: 25px auto;
+    }
+
+    .success-icon {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 18px;
+      border-radius: 50%;
+      background: #DCEBDD;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+    }
+
+    .success-card h3 {
+      font-family: "Bodoni Moda", serif;
+      font-size: 27px;
+      margin-bottom: 15px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 12px 0;
+      border-bottom: 1px solid #DDE7DC;
+      text-align: left;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-label {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .info-value {
+      font-weight: 700;
+      text-align: right;
+    }
+
+    .anonymous-name {
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: 700;
+      margin: 10px 0 5px;
+    }
+
+    .teacher-list {
+      display: grid;
+      gap: 13px;
+      max-width: 500px;
+      margin: 25px auto;
+    }
+
+    .teacher-option {
+      border: 1px solid var(--border);
+      background: #fffdf8;
+      border-radius: 16px;
+      padding: 17px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s ease;
+    }
+
+    .teacher-option:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .teacher-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #E9DDF0;
+      color: var(--accent-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+    }
+
+    .teacher-details {
+      flex: 1;
+    }
+
+    .teacher-details strong {
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .teacher-details span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .selected-teacher {
+      max-width: 480px;
+      margin: 15px auto 0;
+      padding: 13px 16px;
+      background: #F5EFEA;
+      border-radius: 12px;
+      font-size: 14px;
+    }
+
+    .demo-box {
+      max-width: 520px;
+      margin: 30px auto 0;
+      padding: 17px;
+      border-radius: 14px;
+      background: #F8F2EA;
+      border: 1px dashed var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .demo-box strong {
+      color: var(--text);
+    }
+
+    @media (max-width: 650px) {
+      body {
+        padding: 10px;
+      }
+
+      .app {
+        border-radius: 20px;
+      }
+
+      .screen {
+        padding: 25px 20px;
+        min-height: 680px;
+      }
+
+      .brand {
+        margin-bottom: 30px;
+      }
+
+      .role-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 43px;
+      }
+
+      h2 {
+        font-size: 32px;
+      }
+
+      .info-row {
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .info-value {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- =========================
+       LANDING
+  ========================== -->
+  <section id="landing" class="screen active">
+
+    <div class="brand">
+      Learn<span>Lens</span>
+    </div>
+
+    <div class="content">
+
+      <div class="eyebrow">Welcome</div>
+
+      <h1>Learn without<br>holding back.</h1>
+
+      <p class="subtitle">
+        Choose how you want to enter LearnLens.
+        Students can stay anonymous while teachers
+        access their verified class account.
+      </p>
+
+      <div class="role-grid">
+
+        <div class="role-card" onclick="showScreen('student-code')">
+          <div class="role-icon">🎓</div>
+          <h3>I'm a Student</h3>
+          <p>
+            Join your class anonymously using
+            the class secret code.
+          </p>
+        </div>
+
+        <div class="role-card" onclick="showScreen('teacher-code')">
+          <div class="role-icon">👩‍🏫</div>
+          <h3>I'm a Teacher</h3>
+          <p>
+            Enter your class code and verify
+            your teacher account.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       STUDENT: CLASS CODE
+  ========================== -->
+  <section id="student-code" class="screen">
+
+    <button class="back-btn" onclick="showScreen('landing')">
+      ← Back
+    </button>
+
+    <div class="content">
+
+      <div class="eyebrow">Student access</div>
+
+      <h2>Enter your class code</h2>
+
+      <p class="subtitle">
+        Use the secret code provided by your teacher.
+        You won't need to enter your real name.
+      </p>
+
+      <div class="form-box">
+
+        <label for="studentClassCode">
+          Class Secret Code
+        </label>
+
+        <input
+          id="studentClassCode"
+          type="text"
+          placeholder="Enter class code"
+          autocomplete="off"
+        >
+
+        <div id="studentCodeError" class="error">
+          Incorrect class secret code. Please try again.
+        </div>
+
+        <button class="primary-btn" onclick="verifyStudentCode()">
+          Continue
+        </button>
+
+      </div>
+
+      <div class="demo-box">
+        Demo class code: <strong>CLASS2026</strong>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       STUDENT: VERIFIED
+  ========================== -->
+  <section id="student-success" class="screen">
+
+    <button class="back-btn" onclick="showScreen('student-code')">
+      ← Back
+    </button>
+
+    <div class="content">
+
+      <div class="eyebrow">Student access</div>
+
+      <h2>You're in.</h2>
+
+      <p class="subtitle">
+        Your class has been verified.
+        You can continue anonymously.
+      </p>
+
+      <div class="success-card">
+
+        <div class="success-icon">✓</div>
+
+        <h3>Anonymous access enabled</h3>
+
+        <p style="color: var(--muted); font-size: 14px;">
+          Your real name is not displayed.
+        </p>
+
+        <div class="anonymous-name" id="studentUsername">
+          Student-XXXXXX
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Class</span>
+          <span class="info-value">Class 10A</span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Subject</span>
+          <span class="info-value">Computer Science</span>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       TEACHER: CLASS CODE
+  ========================== -->
+  <section id="teacher-code" class="screen">
+
+    <button class="back-btn" onclick="showScreen('landing')">
+      ← Back
+    </button>
+
+    <div class="content">
+
+      <div class="eyebrow">Teacher access</div>
+
+      <h2>Enter your class code</h2>
+
+      <p class="subtitle">
+        Enter the secret code associated with
+        your class.
+      </p>
+
+      <div class="form-box">
+
+        <label for="teacherClassCode">
+          Class Secret Code
+        </label>
+
+        <input
+          id="teacherClassCode"
+          type="text"
+          placeholder="Enter class code"
+          autocomplete="off"
+        >
+
+        <div id="teacherCodeError" class="error">
+          Incorrect class secret code. Please try again.
+        </div>
+
+        <button class="primary-btn" onclick="verifyTeacherCode()">
+          Continue
+        </button>
+
+      </div>
+
+      <div class="demo-box">
+        Demo class code: <strong>CLASS2026</strong>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       TEACHER: SELECT TEACHER
+  ========================== -->
+  <section id="teacher-select" class="screen">
+
+    <button class="back-btn" onclick="showScreen('teacher-code')">
+      ← Back
+    </button>
+
+    <div class="content">
+
+      <div class="eyebrow">Teacher access</div>
+
+      <h2>Select your account</h2>
+
+      <p class="subtitle">
+        Choose the teacher account you want to continue with.
+      </p>
+
+      <div class="teacher-list">
+
+        <div
+          class="teacher-option"
+          onclick="selectTeacher('Anjali Ma’am', 'Computer Science', 'AM')"
+        >
+          <div class="teacher-avatar">AM</div>
+
+          <div class="teacher-details">
+            <strong>Anjali Ma’am</strong>
+            <span>Computer Science</span>
+          </div>
+        </div>
+
+
+        <div
+          class="teacher-option"
+          onclick="selectTeacher('Rahul Sir', 'Mathematics', 'RS')"
+        >
+          <div class="teacher-avatar">RS</div>
+
+          <div class="teacher-details">
+            <strong>Rahul Sir</strong>
+            <span>Mathematics</span>
+          </div>
+        </div>
+
+
+        <div
+          class="teacher-option"
+          onclick="selectTeacher('Priya Ma’am', 'Physics', 'PM')"
+        >
+          <div class="teacher-avatar">PM</div>
+
+          <div class="teacher-details">
+            <strong>Priya Ma’am</strong>
+            <span>Physics</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       TEACHER: PASSWORD
+  ========================== -->
+  <section id="teacher-password" class="screen">
+
+    <button class="back-btn" onclick="showScreen('teacher-select')">
+      ← Back
+    </button>
+
+    <div class="content">
+
+      <div class="eyebrow">Teacher verification</div>
+
+      <h2>Enter your password</h2>
+
+      <p class="subtitle">
+        Verify your selected teacher account to continue.
+      </p>
+
+      <div id="selectedTeacherBox" class="selected-teacher">
+        Selected teacher
+      </div>
+
+      <div class="form-box">
+
+        <label for="teacherPassword">
+          Password
+        </label>
+
+        <input
+          id="teacherPassword"
+          type="password"
+          placeholder="Enter password"
+          autocomplete="off"
+        >
+
+        <div id="passwordError" class="error">
+          Incorrect password. Please try again.
+        </div>
+
+        <button class="primary-btn" onclick="verifyTeacherPassword()">
+          Verify
+        </button>
+
+      </div>
+
+      <div class="demo-box">
+        Demo password: <strong>TEACHER123</strong>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- =========================
+       TEACHER: SUCCESS
+  ========================== -->
+  <section id="teacher-success" class="screen">
+
+    <button class="back-btn" onclick="showScreen('teacher-password')">
+      ← Back
+    </button>
+
+    <div class="content">
+
+      <div class="eyebrow">Teacher access</div>
+
+      <h2>Welcome back.</h2>
+
+      <p class="subtitle">
+        Your teacher account has been successfully verified.
+      </p>
+
+      <div class="success-card">
+
+        <div class="success-icon">✓</div>
+
+        <h3 id="teacherWelcome">
+          Teacher verified
+        </h3>
+
+        <div class="info-row">
+          <span class="info-label">Teacher</span>
+          <span class="info-value" id="teacherName">
+            —
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Department</span>
+          <span class="info-value" id="teacherDepartment">
+            —
+          </span>
+        </div>
+
+        <div class="info-row">
+          <span class="info-label">Status</span>
+          <span class="info-value">
+            Verified ✓
+          </span>
+        </div>
+
+      </div>
+
+      <p style="color: var(--muted); font-size: 14px;">
+        Teacher dashboard can be connected here later.
+      </p>
+
+    </div>
+  </section>
+
+</div>
+
+
+<script>
+
+  /*
+   * ============================
+   * DEMO CONFIGURATION
+   * ============================
+   */
+
+  const CLASS_CODE = "CLASS2026";
+  const TEACHER_PASSWORD = "TEACHER123";
+
+  let selectedTeacher = {
+    name: "",
+    department: "",
+    initials: ""
+  };
+
+
+  /*
+   * ============================
+   * SCREEN NAVIGATION
+   * ============================
+   */
+
+  function showScreen(screenId) {
+
+    const screens = document.querySelectorAll(".screen");
+
+    screens.forEach(screen => {
+      screen.classList.remove("active");
+    });
+
+    const target = document.getElementById(screenId);
+
+    if (target) {
+      target.classList.add("active");
+    }
+
+    clearErrors();
+  }
+
+
+  /*
+   * ============================
+   * CLEAR ERRORS
+   * ============================
+   */
+
+  function clearErrors() {
+
+    document
+      .querySelectorAll(".error")
+      .forEach(error => {
+        error.classList.remove("show");
+      });
+  }
+
+
+  /*
+   * ============================
+   * STUDENT FLOW
+   * ============================
+   */
+
+  function verifyStudentCode() {
+
+    const input =
+      document
+        .getElementById("studentClassCode")
+        .value
+        .trim()
+        .toUpperCase();
+
+    const error =
+      document.getElementById("studentCodeError");
+
+    if (input === CLASS_CODE) {
+
+      const username = generateAnonymousUsername();
+
+      document.getElementById("studentUsername").textContent =
+        username;
+
+      showScreen("student-success");
+
+    } else {
+
+      error.classList.add("show");
+
+    }
+  }
+
+
+  /*
+   * Generate anonymous student username.
+   * This does NOT use the student's real name.
+   */
+
+  function generateAnonymousUsername() {
+
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "0123456789";
+
+    let result = "Student-";
+
+    for (let i = 0; i < 2; i++) {
+      result +=
+        letters[Math.floor(Math.random() * letters.length)];
+    }
+
+    for (let i = 0; i < 4; i++) {
+      result +=
+        numbers[Math.floor(Math.random() * numbers.length)];
+    }
+
+    return result;
+  }
+
+
+  /*
+   * ============================
+   * TEACHER FLOW
+   * ============================
+   */
+
+  function verifyTeacherCode() {
+
+    const input =
+      document
+        .getElementById("teacherClassCode")
+        .value
+        .trim()
+        .toUpperCase();
+
+    const error =
+      document.getElementById("teacherCodeError");
+
+    if (input === CLASS_CODE) {
+
+      showScreen("teacher-select");
+
+    } else {
+
+      error.classList.add("show");
+
+    }
+  }
+
+
+  /*
+   * ============================
+   * SELECT TEACHER
+   * ============================
+   */
+
+  function selectTeacher(name, department, initials) {
+
+    selectedTeacher.name = name;
+    selectedTeacher.department = department;
+    selectedTeacher.initials = initials;
+
+    document.getElementById("selectedTeacherBox").innerHTML =
+      "<strong>" + name + "</strong> · " + department;
+
+    showScreen("teacher-password");
+  }
+
+
+  /*
+   * ============================
+   * TEACHER PASSWORD
+   * ============================
+   */
+
+  function verifyTeacherPassword() {
+
+    const input =
+      document
+        .getElementById("teacherPassword")
+        .value;
+
+    const error =
+      document.getElementById("passwordError");
+
+    if (input === TEACHER_PASSWORD) {
+
+      document.getElementById("teacherName").textContent =
+        selectedTeacher.name;
+
+      document.getElementById("teacherDepartment").textContent =
+        selectedTeacher.department;
+
+      document.getElementById("teacherWelcome").textContent =
+        "Welcome, " + selectedTeacher.name;
+
+      showScreen("teacher-success");
+      setTimeout(() => {
+       window.location.href = "/teacher";
+      }, 800);
+    } else {
+
+      error.classList.add("show");
+
+    }
+  }
+
+
+  /*
+   * ============================
+   * ENTER KEY SUPPORT
+   * ============================
+   */
+
+  document
+    .getElementById("studentClassCode")
+    .addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+        verifyStudentCode();
+      }
+
+    });
+
+
+  document
+    .getElementById("teacherClassCode")
+    .addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+        verifyTeacherCode();
+      }
+
+    });
+
+
+  document
+    .getElementById("teacherPassword")
+    .addEventListener("keydown", function(event) {
+
+      if (event.key === "Enter") {
+        verifyTeacherPassword();
+      }
+
+    });
+
+</script>
+
+</body>
+</html>

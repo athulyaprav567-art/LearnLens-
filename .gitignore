@@ -40,3 +40,8 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+
+backend/.venv/
+backend/.uv-cache/
+.env
+
